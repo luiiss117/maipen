@@ -1,0 +1,6 @@
+flask
+requests
+render_template
+flask_session
+argon2-cffi
+dotenv
