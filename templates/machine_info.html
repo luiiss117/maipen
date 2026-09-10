@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h2>{{machine_name}} information</h2>
+    <h4> Name: {{machine_name}} </h4>
+    <h4> IP Address: {{machine_ip}} </h4>
+    <h4> Operating System: {{machine_os}} </h4>
+    <h4> Description: {{machine_description}} </h4>
+    <!-- Add more columns for more machine info, from the service, credentials tables etc. -->
+    <a href="{{url_for('machines.new_machine')}}">Add new machine</a>
+    <br>
+    <a href="{{url_for('machines.my_machines')}}">My machines</a>
+
+      
+</body>
+</html>

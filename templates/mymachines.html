@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+
+    {% with messages = get_flashed_messages()%}
+    {% if messages%}
+    {% for message in messages%}
+    <p>{{message}}</p>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+    <h3>My Machines:</h3>
+    {% if error_no_machines_created == True %}
+    <h5> Your machines will be displayed here, you don't have created any machine yet.</h5>
+    {%endif%}
+    {% for var in machines_list %}
+    <a href="{{url_for('machines.machine_info', machine_uuid=var[5])}}">{{var[1]}}</a>
+    {% endfor %}
+    <br>
+    <br>
+    <a href="{{url_for('machines.new_machine')}}">Add new machine</a>
+      
+</body>
+</html>

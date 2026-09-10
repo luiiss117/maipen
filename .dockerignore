@@ -1,0 +1,8 @@
+.env
+.venv/
+.git/
+flask_session/
+__pycache__/
+*.db
+*.sqlite
+*.sqlite3
