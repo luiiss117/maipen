@@ -148,7 +148,7 @@ def get_machine(user_id):
     except sqlite3.OperationalError as e:
         print('Error:', e)
 
-def get_machine_by_ids(user_id, uuid):
+def get_machine_by_ids(user_id, machine_id):
     try:
         with sqlite3.connect(database) as conn:
             sql = ''' SELECT id,name,ip_address,operating_system,created_at,uid FROM machines WHERE user_id =? AND uid=? '''

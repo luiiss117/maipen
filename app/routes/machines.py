@@ -58,7 +58,7 @@ def new_machine():
 def machine_info(machine_uuid):
     if session.get("user_id"):
         user_id = session.get("user_id")
-        m_data = app.database.get_machine_by_ids(user_id, machine_uuid)
+        m_data = app.database.get_machine_by_ids(user_id, machine_uid)
         machine_name = m_data[1]
         machine_ip = m_data[2]
         machine_os = m_data[3]
