@@ -12,28 +12,29 @@ def new_service():
     if user_id:
         machine_uuid = request.args.get("m")
         if request.method == 'POST':
-            machine_id = app.database.machine.get_machine_by_userid_and_uuid(user_id, machine_uuid)[0]
-            if not machine_id:
+            machine = app.database.machine.get_machine_by_userid_and_uuid(user_id, machine_uuid)
+            if not machine:
                 abort(404)
             else:
+                machine_id = machine[0]
                 try:
                     port = int(request.form["port"])
                     if port > 65535 or port < 1:
                         error="Invalid port number"
-                        return render_template("add_service.html", error=error)
+                        return render_template("add_service.html", error=error, machine_uuid=machine_uuid)
                 except ValueError:
                     error="Port must be a number"
-                    return render_template("add_service.html", error=error)
+                    return render_template("add_service.html", error=error, machine_uuid=machine_uuid)
                 if app.database.service.get_service_port(machine_id,port):
                     error="Invalid port number"
-                    return render_template("add_service.html", error=error)
+                    return render_template("add_service.html", error=error, machine_uuid=machine_uuid)
                 else:
                     name = request.form["name"]
                     version = request.form["version"]
                     protocol = request.form["protocol"]
                     app.database.service.add_new_service(protocol,port,name,version,machine_id)
                     flash("Service added successfully")
-            return render_template("add_service.html")
+            return render_template("add_service.html",machine_uuid=machine_uuid)
     else:
         abort(404)
         return render_template("add_service.html")
