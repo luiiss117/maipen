@@ -6,6 +6,14 @@ A lightweight **Flask-based machine management system** designed for tracking ma
 
 Maipen provides a simple web interface where security consultants, system administrators, and penetration testers can register machines and manage its services.
 
+## Development Status
+
+Maipen is under development.
+
+Some tables, models, and features might already exist even though they are not fully implemented or visible yet. They are there as part of the planned structure and will be used as the project grows.
+
+More features, improvements, and changes will be added over time.
+
 ---
 
 ## Features
