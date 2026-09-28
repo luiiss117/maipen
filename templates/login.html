@@ -1,21 +1,231 @@
-<!DOCTYPE html>
-<html>
-<body>
-    {% if error == True: %}
-    <font color="#FF0000">Invalid credentials</font>
-    {% endif %}
-    <h1>Login page</h1>	
-    <h3>Username:</h3>
-    <form method="post">
-        <input type="text" name="username" placeholder="Enter your username" required>
-        <br><br>
-	<h3>Password:</h3>
-	<input type="password" name="password" placeholder="Enter your password" required>
-	<br><br>
-	<input type="submit" value="Log in">
-	<br><br>
-	<h4>Or</h4>
-	<a href="{{url_for('auth.register')}}">Create new account</a>
-    </form>
-</body>
-</html>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: linear-gradient(
+            135deg,
+            #0f172a,
+            #1d4ed8,
+            #38bdf8
+        );
+    }
+
+    .login-card {
+
+        background: white;
+
+        width: 380px;
+
+        padding: 40px;
+
+        border-radius: 16px;
+
+        box-shadow:
+            0 20px 40px rgba(0,0,0,0.25);
+
+        text-align: center;
+    }
+
+
+    h1 {
+
+        color: #1e3a8a;
+
+        margin-bottom: 30px;
+    }
+
+
+    h3 {
+
+        text-align: left;
+
+        color: #334155;
+
+        margin-bottom: 8px;
+
+        font-size: 15px;
+    }
+
+
+    input[type="text"],
+    input[type="password"] {
+
+        width: 100%;
+
+        padding: 12px;
+
+        border-radius: 8px;
+
+        border: 1px solid #cbd5e1;
+
+        font-size: 15px;
+
+        outline: none;
+
+        transition: 0.2s;
+    }
+
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px rgba(37,99,235,0.2);
+    }
+
+
+    input[type="submit"] {
+
+        width: 100%;
+
+        margin-top: 25px;
+
+        padding: 12px;
+
+        background: #2563eb;
+
+        color: white;
+
+        border: none;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+    }
+
+
+    input[type="submit"]:hover {
+
+        background: #1d4ed8;
+    }
+
+
+    .error {
+
+        background: #fee2e2;
+
+        color: #b91c1c;
+
+        padding: 10px;
+
+        border-radius: 8px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .divider {
+
+        margin: 20px 0;
+
+        color: #64748b;
+
+        font-size: 14px;
+    }
+
+
+    .register-link {
+
+        display: inline-block;
+
+        margin-top: 5px;
+
+        color: #2563eb;
+
+        text-decoration: none;
+
+        font-weight: 600;
+
+    }
+
+
+    .register-link:hover {
+
+        text-decoration: underline;
+
+    }
+
+</style>
+
+</head> <body> <div class="login-card">
+{% if error == True %}
+
+    <div class="error">
+        Invalid credentials
+    </div>
+
+{% endif %}
+
+
+<h1>Welcome Back</h1>
+
+
+<form method="post">
+
+
+    <h3>Username</h3>
+
+    <input
+        type="text"
+        name="username"
+        placeholder="Enter your username"
+        required
+    >
+
+
+
+    <h3>Password</h3>
+
+    <input
+        type="password"
+        name="password"
+        placeholder="Enter your password"
+        required
+    >
+
+
+
+    <input
+        type="submit"
+        value="Log in"
+    >
+
+
+
+    <div class="divider">
+        Or
+    </div>
+
+
+    <a
+        class="register-link"
+        href="{{ url_for('auth.register') }}"
+    >
+        Create a new account
+    </a>
+
+
+</form>
+
+</div> </body> </html>

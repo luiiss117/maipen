@@ -1,22 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h2>{{machine_name}} information</h2>
-    <h4> Name: {{machine_name}} </h4>
-    <h4> IP Address: {{machine_ip}} </h4>
-    <h4> Operating System: {{machine_os}} </h4>
-    <h4> Description: {{machine_description}} </h4>
-    <!-- Add more columns for more machine info, from the service, credentials tables etc. -->
-    <a href="{{url_for('machines.new_machine')}}">Add new machine</a>
-    <br>
-    <a href="{{url_for('machines.my_machines')}}">My machines</a>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>{{ machine_name }} - Information</title> <style> * { box-sizing: border-box; font-family: "Segoe UI", Arial, sans-serif; } body { margin:0; min-height:100vh; padding:40px; color:white; background: radial-gradient( circle at top left, #2563eb, transparent 35% ), linear-gradient( 135deg, #020617, #0f172a, #172554 ); } .container { max-width:1200px; margin:auto; } .flash { background:#1e40af; padding:15px; border-radius:10px; margin-bottom:20px; } .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; } .header h1 { color:#38bdf8; margin:0; } .back { background:#2563eb; color:white; text-decoration:none; padding:12px 20px; border-radius:10px; } .machine-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius:20px; padding:30px; backdrop-filter:blur(12px); margin-bottom:30px; } .machine-title { font-size:32px; color:#e0f2fe; margin-bottom:20px; } .info-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:20px; } .info-box { background: rgba(255,255,255,0.08); padding:20px; border-radius:15px; } .label { color:#94a3b8; font-size:14px; } .value { margin-top:8px; font-size:18px; color:white; } .section-title { margin-top:40px; color:#38bdf8; } table { width:100%; border-collapse:collapse; margin-top:20px; overflow:hidden; border-radius:15px; } th { background:#1e3a8a; color:white; padding:15px; text-align:left; } td { padding:15px; border-bottom: 1px solid rgba(255,255,255,0.1); } tr { background: rgba(255,255,255,0.06); } tr:hover { background: rgba(255,255,255,0.12); } .badge { background:#0ea5e9; padding:6px 12px; border-radius:20px; font-size:13px; } .action { color:white; text-decoration:none; padding:8px 14px; border-radius:8px; background:#dc2626; } .action:hover { background:#b91c1c; } .buttons { margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; } .button { text-decoration:none; color:white; background:#2563eb; padding:12px 20px; border-radius:10px; font-weight:bold; } .button:hover { background:#1d4ed8; } .green { background:#16a34a; } .green:hover { background:#15803d; } </style> </head> <body> <div class="container">
 
-      
-</body>
-</html>
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="flash"> {{ message }} </div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+<div class="header"> <h1> 🖥️ Machine Details </h1>
+
+<a class="back" href="{{ url_for('machines.my_machines') }}">
+Back to Machines
+</a>
+
+</div> <div class="machine-card"> <div class="machine-title">
+
+{{ machine_name }}
+
+</div> <div class="info-grid"> <div class="info-box"> <div class="label"> IP Address </div> <div class="value"> {{ machine_ip }} </div> </div> <div class="info-box"> <div class="label"> Operating System </div> <div class="value"> {{ machine_os }} </div> </div> <div class="info-box"> <div class="label"> Created </div> <div class="value"> {{ machine_creation_date }} </div> </div> <div class="info-box"> <div class="label"> Description </div> <div class="value"> {{ machine_description }} </div> </div> </div> </div>
+
+{% if m_services %}
+
+<h2 class="section-title"> ⚙ Services </h2> <table> <thead> <tr> <th>Protocol</th> <th>Port</th> <th>Name</th> <th>Version</th> <th>Action</th> </tr> </thead> <tbody>
+
+{% for var in m_services %}
+
+<tr> <td> <span class="badge"> {{ var[0] }} </span> </td> <td> {{ var[1] }} </td> <td> {{ var[2] }} </td> <td> {{ var[3] }} </td> <td>
+
+<a class="action" href="{{ url_for('services.delete_service', m=machine_uuid, p=var[1]) }}">
+Delete
+</a>
+
+</td> </tr>
+
+{% endfor %}
+
+</tbody> </table>
+
+{% else %}
+
+<div class="machine-card">
+
+No services registered for this machine.
+
+</div>
+
+{% endif %}
+
+<div class="buttons">
+
+<a class="button green" href="{{ url_for('services.new_service', m=machine_uuid) }}">
+
+Add Service
+</a>
+
+<a class="button" href="{{ url_for('machines.new_machine') }}">
+
+Add Machine
+</a>
+
+<a class="button" href="{{ url_for('machines.my_machines') }}">
+My Machines
+</a>
+
+</div> </div> </body> </html>

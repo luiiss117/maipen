@@ -1,7 +1,7 @@
-from flask import request, render_template, redirect, url_for, session, flash, Blueprint
+from flask import request, render_template, redirect, url_for, session, flash, Blueprint, abort
 from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError, HashingError, VerificationError
-import app.database
+from argon2.exceptions import VerifyMismatchError, HashingError, VerificationError, InvalidHashError
+import app.database.user
 
 
 auth_bp = Blueprint('auth', __name__, template_folder='../../templates')
@@ -14,7 +14,7 @@ def password_hashing(passw):
         phash = ph.hash(passw)
         return phash
     except HashingError as e:
-        print("Hashing error", e)
+        print("Hashing error:", e)
 
 
 @auth_bp.route('/login', methods=["GET", "POST"])
@@ -25,7 +25,7 @@ def login():
         if request.method == "POST":
             username = request.form["username"]
             password = request.form["password"]
-            user = app.database.get_user_by_username(username)
+            user = app.database.user.get_user_by_username(username)
             if not user:
                 return render_template("login.html",error=True)
             try: 
@@ -37,8 +37,8 @@ def login():
             except VerifyMismatchError:
                 return render_template("login.html",error=True)
             except VerificationError:
-                return "An error occurred"
-            except InvalidHashError:
+                return "A verification error occurred"
+            except InvalidHashError as e:
                 return "Invalid hash"
         return render_template("login.html")
 
@@ -53,20 +53,20 @@ def register():
             user_id = session.get("user_id")
 
             # Check if the user exists in the database
-            if not app.database.get_user_by_username(register_username):
+            if not app.database.user.get_user_by_username(register_username):
                 secured_password = password_hashing(register_passw)
-                app.database.add_new_user(register_username, secured_password)
+                app.database.user.add_new_user(register_username, secured_password)
                 return redirect(url_for("auth.login"))
             else:
                 return render_template("register.html", error=True, register_username=register_username)
         return render_template("register.html")
     return redirect(url_for("auth.dashboard"))
 
-@auth_bp.route('/dashboard', methods=['GET', 'POST'])
+@auth_bp.route('/dashboard', methods=['GET'])
 def dashboard():
     if session.get("user_id"):
         user_id = session.get("user_id")
-        username = app.database.get_user_by_id(user_id)[1]
+        username = app.database.user.get_user_by_id(user_id)[1]
     else:
         return redirect(url_for("auth.login"))
     return render_template("dashboard.html", username=username)
@@ -74,8 +74,23 @@ def dashboard():
 @auth_bp.route('/logout')
 def logout():
         session.clear()
-        return redirect("/")
+        return redirect(url_for("auth.login"))
 
-@auth_bp.route('/', methods=['GET','POST'])
+@auth_bp.route('/')
 def index():
     return redirect(url_for("auth.login"))
+
+@auth_bp.route('/user/delete', methods=["GET", "POST"])
+def delete_account():
+    user_id = session.get("user_id")
+    if user_id:
+        if request.method == "POST":
+            if request.form["confirmation"] == "Yes":
+                app.database.user.delete_account(user_id)
+                session.clear()
+                flash("Account deleted successfully")
+            return redirect(url_for("auth.register"))
+        return render_template("delete_account.html")
+    else:
+        abort(401)
+    return render_template("delete_account.html")

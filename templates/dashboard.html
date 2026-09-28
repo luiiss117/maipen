@@ -1,17 +1,418 @@
-<!DOCTYPE html>
-<html>
-<body>
-    {% with messages = get_flashed_messages()%}
-    {% if messages%}
-    {% for message in messages%}
-    <p>{{message}}</p>
-    {%endfor%}
-    {%endif%}
-    {%endwith%}
-	<h1>Dashboard</h1>
-    {% if username %}
-    	<h3> Welcome {{ username }} </h3>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+
+    body {
+
+        margin: 0;
+        min-height: 100vh;
+
+        background:
+            radial-gradient(
+                circle at top left,
+                #2563eb,
+                transparent 35%
+            ),
+            linear-gradient(
+                135deg,
+                #020617,
+                #0f172a,
+                #172554
+            );
+
+        color: white;
+
+        padding: 40px;
+    }
+
+
+    .container {
+
+        max-width: 1100px;
+
+        margin: auto;
+
+    }
+
+
+    .top-bar {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 40px;
+
+    }
+
+
+    .logo {
+
+        font-size: 28px;
+
+        font-weight: 800;
+
+        letter-spacing: 1px;
+
+        color: #38bdf8;
+
+    }
+
+
+    .user {
+
+        background: rgba(255,255,255,0.1);
+
+        padding: 12px 20px;
+
+        border-radius: 30px;
+
+        backdrop-filter: blur(10px);
+
+    }
+
+
+
+    .welcome {
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(37,99,235,0.8),
+                rgba(14,165,233,0.5)
+            );
+
+        padding: 40px;
+
+        border-radius: 20px;
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,0.35);
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .welcome h1 {
+
+        margin: 0;
+
+        font-size: 42px;
+
+    }
+
+
+    .welcome p {
+
+        color: #dbeafe;
+
+        font-size: 18px;
+
+    }
+
+
+
+    .grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(250px, 1fr));
+
+        gap: 25px;
+
+    }
+
+
+
+    .card {
+
+        background:
+            rgba(255,255,255,0.08);
+
+        border:
+            1px solid rgba(255,255,255,0.15);
+
+        padding: 30px;
+
+        border-radius: 18px;
+
+        backdrop-filter: blur(12px);
+
+        transition: 0.25s;
+
+    }
+
+
+    .card:hover {
+
+        transform: translateY(-5px);
+
+        background:
+            rgba(255,255,255,0.15);
+
+    }
+
+
+
+    .icon {
+
+        font-size: 35px;
+
+        margin-bottom: 15px;
+
+    }
+
+
+    .card h2 {
+
+        margin-top: 0;
+
+    }
+
+
+    .card p {
+
+        color: #cbd5e1;
+
+    }
+
+
+
+    a {
+
+        text-decoration: none;
+
+        color: white;
+
+    }
+
+
+
+    .button {
+
+        display: inline-block;
+
+        margin-top: 15px;
+
+        padding: 12px 22px;
+
+        border-radius: 10px;
+
+        background: #2563eb;
+
+        font-weight: bold;
+
+        transition: 0.2s;
+
+    }
+
+
+    .button:hover {
+
+        background: #1d4ed8;
+
+    }
+
+
+
+    .danger {
+
+        background:
+            rgba(220,38,38,0.2);
+
+        border:
+            1px solid rgba(248,113,113,0.3);
+
+    }
+
+
+    .danger .button {
+
+        background: #dc2626;
+
+    }
+
+
+    .danger .button:hover {
+
+        background: #b91c1c;
+
+    }
+
+
+
+    .flash {
+
+        background:#1e40af;
+
+        padding:15px;
+
+        border-radius:10px;
+
+        margin-bottom:20px;
+
+    }
+
+
+</style>
+
+</head> <body> <div class="container">
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
-    <a href="{{url_for('auth.logout')}}">Logout</a>
-</body>
-</html>
+{% endwith %}
+
+
+
+<div class="top-bar">
+
+    <div class="logo">
+        ⚡ Machine Manager
+    </div>
+
+
+    <div class="user">
+        {{ username }}
+    </div>
+
+</div>
+
+
+
+
+<div class="welcome">
+
+    <h1>
+        Welcome back, {{ username }}
+    </h1>
+
+    <p>
+        Manage your infrastructure, services and connected machines from one place.
+    </p>
+
+</div>
+
+
+
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <div class="icon">
+            🖥️
+        </div>
+
+        <h2>
+            My Machines
+        </h2>
+
+        <p>
+            View and manage registered machines, operating systems and services.
+        </p>
+
+
+        <a class="button"
+           href="{{ url_for('machines.my_machines') }}">
+            Open Machines
+        </a>
+
+    </div>
+
+
+
+
+
+    <div class="card">
+
+        <div class="icon">
+            🔒
+        </div>
+
+        <h2>
+            Security
+        </h2>
+
+        <p>
+            Keep track of your infrastructure information and service exposure.
+        </p>
+
+    </div>
+
+
+
+
+
+    <div class="card">
+
+        <div class="icon">
+            🚪
+        </div>
+
+        <h2>
+            Logout
+        </h2>
+
+        <p>
+            End your current session securely.
+        </p>
+
+
+        <a class="button"
+           href="{{ url_for('auth.logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+
+
+
+
+    <div class="card danger">
+
+        <div class="icon">
+            ⚠️
+        </div>
+
+
+        <h2>
+            Delete Account
+        </h2>
+
+
+        <p>
+            Permanently remove your account and associated data.
+        </p>
+
+
+        <a class="button"
+           href="{{ url_for('auth.delete_account') }}">
+            Delete Account
+        </a>
+
+    </div>
+
+
+
+</div>
+
+</div> </body> </html>

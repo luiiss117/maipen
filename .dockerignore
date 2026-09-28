@@ -1,8 +1,15 @@
 .env
+.env.*
 .venv/
+
 .git/
+
 flask_session/
+
 __pycache__/
+*.py[cod]
+
 *.db
 *.sqlite
 *.sqlite3
+
