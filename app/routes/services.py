@@ -13,8 +13,8 @@ def new_service():
         machine_uuid = request.args.get("m")
         if request.method == 'POST':
             machine_id = app.database.machine.get_machine_by_userid_and_uuid(user_id, machine_uuid)[0]
-            if not machine:
-            abort(404)
+            if not machine_id:
+                abort(404)
             else:
                 try:
                     port = int(request.form["port"])
