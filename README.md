@@ -1,7 +1,5 @@
 # Maipen
 
-# Maipen
-
 A lightweight **Flask-based machine management system** designed for tracking machines, CTF targets and services.
 
 Maipen provides a simple web interface where security consultants, system administrators, and penetration testers can register machines and manage its services.
