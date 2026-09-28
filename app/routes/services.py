@@ -56,7 +56,7 @@ def delete_service():
                 else:
                     return redirect(url_for("machines.machine_info", machine_uuid=machine_uuid))
             else:
-                flash("This service doesn't exists")
+                flash("This service doesn't exist")
                 return redirect(url_for("machines.machine_info", machine_uuid=machine_uuid))
             return render_template("delete_service.html")
     else:
