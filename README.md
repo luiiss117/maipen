@@ -1,89 +1,120 @@
-Maipen
+# Maipen
 
-A lightweight Flask-based machine management system for keeping track of machines, operating systems, IP addresses, and services.
+A lightweight **Flask-based machine management system** for keeping track of machines, operating systems, IP addresses, and services.
 
-Maipen provides a simple web interface where users can register machines, manage services, and maintain an organized inventory.
+Maipen provides a simple web interface where users can register machines, manage services, and maintain an organized infrastructure inventory.
 
-Features
+---
 
-User authentication
+## Features
 
-Machine management
+### User Authentication
 
-Add machines
+- User login and authentication
+- Protected application routes
 
-View machine information
+### Machine Management
 
-Delete machines
+- Add machines
+- View machine information
+- Delete machines
 
-Store:
+Each machine stores:
 
-Machine name
+- Machine name
+- IPv4 address
+- Operating system
+- Description
 
-IPv4 address
+### Service Management
 
-Operating system
+- Add services
+- Track service ports
+- Remove services
 
-Description
+### Account Management
 
-Service management
+- User account handling
+- Authentication-based access control
 
-Add services
+### Storage
 
-Track service ports
+- SQLite database support
 
-Remove services
+### Deployment
 
-Account management
+- Docker support
+- Docker Compose support
 
-SQLite database storage
+---
 
-Docker deployment support
+## Technology Stack
 
-Technology Stack
+- **Python**
+- **Flask**
+- **SQLite**
+- **HTML/CSS**
+- **Docker**
+- **Docker Compose**
 
-Python
+---
 
-Flask
+# Running with Docker
 
-SQLite
+## Requirements
 
-HTML/CSS
+Before running Maipen, install:
 
-Docker
+- Git
+- Docker
+- Docker Compose
 
-Docker Compose
+---
 
-Running with Docker
-Requirements
+## Clone the Repository
 
-Git
-
-Docker
-
-Docker Compose
-
-Clone the repository
+```bash
 git clone https://github.com/luiiss117/maipen.git
 cd maipen
+```
 
-Start the application
+---
+
+## Start the Application
+
+```bash
 docker compose up
+```
 
+The application will be available at:
 
-The application will start on:
-
+```
 http://localhost:5000
+```
 
+---
 
-To run it in the background:
+## Run in Background
 
+To start Maipen as a background service:
+
+```bash
 docker compose up -d
+```
 
-Stopping the application
+---
+
+## Stop the Application
+
+```bash
 docker compose down
+```
 
-Project Structure
+---
+
+# Project Structure
+
+```text
 maipen/
 │
 ├── app/
@@ -103,68 +134,96 @@ maipen/
 ├── requirements.txt
 ├── app.py
 └── README.md
+```
 
-Environment Configuration
+---
+
+# Environment Configuration
 
 Sensitive configuration values should be stored in an environment file.
 
 Example:
 
+```text
 .env
+```
 
+Do **not** commit `.env` files to Git.
 
-Do not commit .env files to Git.
+Recommended `.gitignore` entry:
 
-Database
+```gitignore
+.env
+```
 
-Maipen uses SQLite for storage.
+---
+
+# Database
+
+Maipen uses **SQLite** for persistent storage.
 
 The database is created automatically when the application starts.
 
 Database files are intentionally ignored by Git:
 
+```gitignore
 *.db
 *.sqlite
 *.sqlite3
+```
 
-Security Notes
+---
 
-Protected routes require authentication.
+# Security Notes
 
-Destructive actions use POST requests instead of GET requests.
+Maipen includes several security measures:
 
-User data is isolated through authentication checks.
+- Protected routes require authentication
+- Destructive actions use `POST` requests instead of `GET`
+- User data is isolated through authentication checks
+- Session data is stored separately from application source code
 
-Session data is stored separately from the application source.
+---
 
-Development
+# Development
 
-Install dependencies locally:
+## Create a Virtual Environment
 
+```bash
 python -m venv .venv
+```
 
+---
 
-Activate the environment:
+## Activate the Environment
 
-Linux/macOS:
+### Linux / macOS
 
+```bash
 source .venv/bin/activate
+```
 
+### Windows
 
-Windows:
-
+```powershell
 .venv\Scripts\activate
+```
 
+---
 
-Install requirements:
+## Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
+---
 
-Run:
+## Run the Application
 
+```bash
 python app.py
+```
 
-License
+---
 
-This project is provided for educational and personal use.
