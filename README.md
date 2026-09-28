@@ -87,6 +87,31 @@ Before running Maipen, install:
 git clone https://github.com/luiiss117/maipen.git
 cd maipen
 ```
+## Create the `.env` File
+
+Create a `.env` file inside the `app` directory:
+
+```bash
+touch app/.env
+```
+
+Generate a secure secret key:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Copy the generated value and add it to app/.env:
+
+```bash
+SECRET_KEY=your_generated_key_here
+```
+
+Example:
+
+```bash
+SECRET_KEY=7f4d2c9e8a1b5f7c3d9e6a4b8c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4
+```
 
 ---
 
