@@ -186,26 +186,6 @@ maipen/
 
 ---
 
-# Environment Configuration
-
-Sensitive configuration values should be stored in an environment file.
-
-Example:
-
-```text
-.env
-```
-
-Do **not** commit `.env` files to Git.
-
-Recommended `.gitignore` entry:
-
-```gitignore
-.env
-```
-
----
-
 # Database
 
 Maipen uses **SQLite** for persistent storage.
