@@ -43,3 +43,60 @@
     Cleanup: Removed redundant variables (is_valid, need_rehash) from app.py.
     Dependencies: Cleaned up requirements.txt by removing unused packages; updated dotenv to python-dotenv.
 
+[0.3.0] - 2026-09-11
+### Added
+    Database Refactor: Split database.py into separate modules:
+        - app/database/__init__.py
+        - app/database/user.py
+        - app/database/machine.py
+
+    Machine Management:
+        Added machine deletion functionality with confirmation handling.
+
+    Account Management:
+        Added self-account deletion functionality.
+
+    Service Management:
+        Added the ability to create services linked to machines.
+        Added service database tables and retrieval logic.
+        Added service information display inside machine information pages.
+        Added service deletion functionality.
+
+    Docker Deployment:
+        Added docker-compose.yml for simplified application deployment.
+        Improved Docker configuration for running the Flask application.
+        Added Docker container support with persistent application data handling.
+
+### Changed
+    Database Architecture:
+        Improved database organization by separating user and machine database operations into independent modules.
+
+    Machine Information:
+        Fixed machine information retrieval caused by inconsistent UUID variable naming.
+
+    Authentication:
+        Imported missing InvalidHashError exception handling in app/routes/auth.py.
+
+    Front-end:
+        Updated and improved the UI across all HTML templates.
+        Improved delete confirmation pages and overall user interface consistency.
+
+    Application Structure:
+        Continued migration toward a modular Flask Blueprint-based architecture.
+
+### Fixed
+    Database Bugs:
+        Fixed multiple issues in database.py before splitting it into separate modules.
+
+    UUID Handling:
+        Fixed incorrect machine retrieval caused by inconsistent UUID variable names.
+
+    Exception Handling:
+        Fixed missing InvalidHashError import in authentication routes.
+
+    Data Retrieval:
+        Fixed service retrieval and machine-service relationship handling.
+
+### Removed
+    Database Cleanup:
+        Removed the old database.py file after migrating functionality into app/database modules.
