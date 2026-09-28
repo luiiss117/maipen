@@ -151,24 +151,39 @@ docker compose down
 
 ```text
 maipen/
-│
-├── app/
-│   ├── database/
-│   ├── routes/
-│   └── application modules
-│
-├── templates/
-│   ├── login pages
-│   ├── machine pages
-│   └── service pages
-│
-├── static/
-│
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
+├── app
+│   ├── database
+│   │   ├── __init__.py
+│   │   ├── machine.py
+│   │   ├── service.py
+│   │   └── user.py
+│   ├── __init__.py
+│   ├── maipen.db
+│   └── routes
+│       ├── auth.py
+│       ├── __init__.py
+│       ├── machines.py
+│       └── services.py
 ├── app.py
-└── README.md
+├── CHANGELOG.md
+├── docker-compose.yml
+├── Dockerfile
+├── LICENSE.md
+├── README.md
+├── requirements.txt
+├── static
+│   └── css
+└── templates
+    ├── add_machine.html
+    ├── add_service.html
+    ├── dashboard.html
+    ├── delete_account.html
+    ├── delete_machine.html
+    ├── delete_service.html
+    ├── login.html
+    ├── machine_info.html
+    ├── mymachines.html
+    └── register.html
 ```
 
 ---
