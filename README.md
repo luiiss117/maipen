@@ -1,7 +1,3 @@
-Here is the complete `README.md` content in raw GitHub Markdown syntax:
-
- README.md✓
-
 # Maipen
 
  A lightweight **Flask-based machine management system** for tracking machines, CTF targets, and network services.
