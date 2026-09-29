@@ -175,7 +175,7 @@ python app.py
 .venv\Scripts\activate
 ```
 
- # To start HTTPs
+ ## To start HTTPs
 
 Run the `create_certs.sh` script.
 ```
@@ -199,7 +199,8 @@ subject=CN=Maipen Web Server, C=AT, ST=Madrid, L=Madrid, O=Maipen Local
 [+] Created CA
 [+] Done
 ```
- Uncomment this line in `app.py`
+
+ Uncomment this line in `app.py`:
  ```
 #    app.run(host="127.0.0.1",port=5000,debug=False, ssl_context=('certs/web-maipen.crt', 'certs/private/web-maipen.key'))
  ```
