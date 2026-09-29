@@ -1,6 +1,6 @@
 # Maipen
 
- A lightweight **Flask-based machine management system** for tracking machines, CTF targets, and network services.
+ A **Flask-based machine management system** for tracking machines and CTF targets.
 
  Maipen is also a practical security-focused development project, implementing common web application security controls around authentication, authorization, input validation, and secure session handling.
 
@@ -14,27 +14,27 @@
 
  ### Authentication
 
- - User registration, login, and logout
+- User registration, login, and logout
 - Argon2 password hashing
 - Session-based authentication
 - User account deletion
 
  ### Machine Management
 
- - Add, view, and delete machines
+- Add, view, and delete machines
 - IPv4 and operating system information
 - Machine descriptions
 - UUID-based machine identification
 
  ### Service Management
 
- - Add and remove services
-- Track protocols, ports, names, and versions
+- Add and remove services
+- View network protocols, ports, names, and versions
 - Associate services with machines
 
  ### Deployment
 
- - SQLite database
+- SQLite database
 - Docker and Docker Compose
 - HTTPS support
 
@@ -42,16 +42,14 @@
 
  ## Security
 
- Security is a core focus of the project.
-
- - **Argon2** password hashing
+- **Argon2** password hashing
 - **Parameterized SQLite queries** to mitigate SQL injection
 - **Authorization checks** to prevent unauthorized access to user-owned machines
-- **UUID-based resource identification** and ownership validation against IDOR/BOLA
+- **UUID-based resource identification** and ownership validation against IDOR
 - **CSRF token protection** for state-changing requests
 - **Server-side input validation** for machine and service data
 - **Session security** for authenticated users
-- **User enumeration mitigation** in the login flow
+- **User enumeration mitigation** in the login page
 - **HTTP 401** responses for unauthenticated access
 - **POST-only destructive actions**
 - **HTTPS with ML-DSA-87** for experimental post-quantum cryptography
@@ -64,7 +62,7 @@
 
  ## Technology Stack
 
- - Python / Flask
+- Python / Flask
 - SQLite
 - HTML / CSS
 - Docker / Docker Compose
