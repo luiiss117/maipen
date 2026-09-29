@@ -1,45 +1,138 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Delete Service</title> <style> * { box-sizing:border-box; font-family:"Segoe UI", Arial, sans-serif; } body { margin:0; height:100vh; display:flex; justify-content:center; align-items:center; background: radial-gradient( circle at top left, #2563eb, transparent 35% ), linear-gradient( 135deg, #020617, #0f172a, #172554 ); color:white; } .card { width:430px; padding:40px; border-radius:20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); backdrop-filter:blur(15px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); text-align:center; } .icon { font-size:55px; margin-bottom:15px; } h1 { color:#f87171; margin-bottom:15px; } p { color:#cbd5e1; line-height:1.5; margin-bottom:25px; } .warning { background: rgba(220,38,38,0.15); border: 1px solid rgba(248,113,113,0.4); padding:15px; border-radius:12px; color:#fecaca; margin-bottom:25px; } .buttons { display:flex; gap:15px; } button { flex:1; padding:13px; border:none; border-radius:10px; font-size:16px; font-weight:bold; cursor:pointer; transition:0.2s; } .delete { background:#dc2626; color:white; } .delete:hover { background:#b91c1c; } .cancel { background:#2563eb; color:white; } .cancel:hover { background:#1d4ed8; } </style> </head> <body> <div class="card"> <div class="icon">
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Service</title>
 
-⚙️⚠️
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-</div> <h1>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: #07090c;
+        color: #e5e7eb;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
 
-Delete Service?
+    .card {
+        width: min(430px, 100%);
+        padding: 30px;
+        border: 1px solid #30343b;
+        border-radius: 10px;
+        background: #0d1117;
+        text-align: center;
+    }
 
-</h1> <p>
+    .icon {
+        font-size: 42px;
+        margin-bottom: 15px;
+    }
 
-You are about to remove a service from this machine.
+    h1 {
+        margin: 0 0 12px;
+        color: #f87171;
+        font-family: Consolas, monospace;
+        font-size: 25px;
+    }
 
-</p> <div class="warning">
+    p {
+        margin: 0 0 20px;
+        color: #9ca3af;
+        line-height: 1.6;
+    }
 
-This will remove the service entry and its associated port information from your inventory.
+    .warning {
+        margin-bottom: 25px;
+        padding: 13px;
+        border: 1px solid #63252b;
+        border-radius: 7px;
+        background: #180b0d;
+        color: #fca5a5;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+    }
 
-</div> <form method="post"> <div class="buttons">
+    .buttons {
+        display: flex;
+        gap: 10px;
+    }
 
-<button
+    button {
+        flex: 1;
+        padding: 12px;
+        border: 0;
+        border-radius: 7px;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-type="submit"
+    .delete {
+        background: #dc2626;
+    }
 
-class="delete"
+    .delete:hover {
+        background: #b91c1c;
+    }
 
-name="confirmation"
+    .cancel {
+        background: #252b33;
+    }
 
-value="Yes">
+    .cancel:hover {
+        background: #343b45;
+    }
+</style>
 
-Delete Service
+</head> <body> <div class="card">
+<div class="icon">⚙️⚠️</div>
 
-</button>
+<h1>Delete Service?</h1>
 
-<button
+<p>
+    You are about to remove this service
+    from the machine.
+</p>
 
-type="submit"
+<div class="warning">
+    The service entry will be removed.
+</div>
 
-class="cancel"
+<form method="post">
 
-name="confirmation"
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
 
-value="No">
+    <div class="buttons">
 
-Cancel
+        <button
+            class="delete"
+            type="submit"
+            name="confirmation"
+            value="Yes"
+        >
+            Delete Service
+        </button>
 
-</button> </div> </form> </div> </body> </html>
+        <button
+            class="cancel"
+            type="submit"
+            name="confirmation"
+            value="No"
+        >
+            Cancel
+        </button>
+
+    </div>
+
+</form>
+
+</div> </body> </html>

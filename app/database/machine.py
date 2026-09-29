@@ -76,3 +76,13 @@ def delete_machine(user_id, machine_uuid):
             cur.execute(sql, (user_id,machine_uuid))
     except sqlite3.OperationalError as e:
         print("Error", e)
+
+def delete_all_machines_by_userid(user_id):
+    try:
+        with sqlite3.connect(database) as conn:
+            sql = ''' DELETE FROM machines WHERE user_id =? '''
+            cur = conn.cursor()
+            cur.execute(sql, (user_id,))
+    except sqlite3.OperationalError as e:
+        print("Error", e)
+

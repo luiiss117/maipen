@@ -4,6 +4,14 @@
 
 flask_session/
 
+certs/
+
+*.ca
+*.ext
+*.csr
+*.srl
+*.crt
+*.key
 *.db
 *.sqlite
 *.sqlite3

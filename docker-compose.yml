@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: machine-manager
+    container_name: maipen
     ports:
       - "5000:5000"
     volumes:

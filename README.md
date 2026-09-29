@@ -1,257 +1,215 @@
+Here is the complete `README.md` content in raw GitHub Markdown syntax:
+
+ README.md✓
+
 # Maipen
 
-A lightweight **Flask-based machine management system** designed for tracking machines, CTF targets and services.
+ A lightweight **Flask-based machine management system** for tracking machines, CTF targets, and network services.
 
-Maipen provides a simple web interface where security consultants, system administrators, and penetration testers can register machines and manage its services.
+ Maipen is also a practical security-focused development project, implementing common web application security controls around authentication, authorization, input validation, and secure session handling.
 
-## Development Status
+ ## Development Status
 
-Maipen is under development.
-
-Some tables, models, and features might already exist even though they are not fully implemented or visible yet. They are there as part of the planned structure and will be used as the project grows.
-
-More features, improvements, and changes will be added over time.
+ Maipen is under development. Features, security controls, and application structure may change as the project evolves.
 
 ---
 
-## Features
+ ## Features
 
-### User Authentication
+ ### Authentication
 
-- User login and authentication
-- Protected application routes
+ - User registration, login, and logout
+- Argon2 password hashing
+- Session-based authentication
+- User account deletion
 
-### Machine Management
+ ### Machine Management
 
-- Add machines
-- View machine information
-- Delete machines
+ - Add, view, and delete machines
+- IPv4 and operating system information
+- Machine descriptions
+- UUID-based machine identification
 
-Each machine stores:
+ ### Service Management
 
-- Machine name
-- IPv4 address
-- Operating system
-- Description
+ - Add and remove services
+- Track protocols, ports, names, and versions
+- Associate services with machines
 
-### Service Management
+ ### Deployment
 
-- Add services
-- Track service ports
-- Remove services
-
-### Account Management
-
-- User account handling
-- Authentication-based access control
-
-### Storage
-
-- SQLite database support
-
-### Deployment
-
-- Docker support
-- Docker Compose support
+ - SQLite database
+- Docker and Docker Compose
+- HTTPS support
 
 ---
 
-## Technology Stack
+ ## Security
 
-- **Python**
-- **Flask**
-- **SQLite**
-- **HTML/CSS**
-- **Docker**
-- **Docker Compose**
+ Security is a core focus of the project.
+
+ - **Argon2** password hashing
+- **Parameterized SQLite queries** to mitigate SQL injection
+- **Authorization checks** to prevent unauthorized access to user-owned machines
+- **UUID-based resource identification** and ownership validation against IDOR/BOLA
+- **CSRF token protection** for state-changing requests
+- **Server-side input validation** for machine and service data
+- **Session security** for authenticated users
+- **User enumeration mitigation** in the login flow
+- **HTTP 401** responses for unauthenticated access
+- **POST-only destructive actions**
+- **HTTPS with ML-DSA-87** for experimental post-quantum cryptography
+
+ > ML-DSA-87 support depends on the TLS/certificate configuration and is currently incompatible with Firefox in this setup. Chromium-based browsers are recommended for testing.
+
+ The project is not formally security audited and should not be considered production-hardened.
 
 ---
 
-# Running with Docker
+ ## Technology Stack
 
-## Requirements
+ - Python / Flask
+- SQLite
+- HTML / CSS
+- Docker / Docker Compose
+- Argon2
+- HTTPS / ML-DSA-87
 
-Before running Maipen, install:
+---
 
-- Git
+ # Running with Docker
+
+ ### Requirements
+
+ - Git
 - Docker
 - Docker Compose
 
----
+ ### Clone
 
-## Clone the Repository
-
-```bash
+```
 git clone https://github.com/luiiss117/maipen.git
 cd maipen
 ```
-## Create the `.env` File
 
-Create a `.env` file inside the `app` directory:
+ ### Configure
 
-```bash
+ Create `app/.env`:
+
+```
 touch app/.env
 ```
 
-Generate a secure secret key:
+ Generate a secret key:
 
-```bash
+```
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-Copy the generated value and add it to app/.env:
+ Add it to `.env`:
 
-```bash
+```
 SECRET_KEY=your_generated_key_here
 ```
 
-Example:
+ ### Start
 
-```bash
-SECRET_KEY=7f4d2c9e8a1b5f7c3d9e6a4b8c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4
 ```
-
----
-
-## Start the Application
-
-```bash
 docker compose up
 ```
 
-The application will be available at:
+ The application will be available at:
 
 ```
 http://localhost:5000
 ```
 
----
+ Run in the background:
 
-## Run in Background
-
-To start Maipen as a background service:
-
-```bash
+```
 docker compose up -d
 ```
 
----
+ Stop:
 
-## Stop the Application
-
-```bash
+```
 docker compose down
 ```
 
 ---
 
-# Project Structure
+ # Project Structure
 
-```text
+```
 maipen/
-├── app
-│   ├── database
-│   │   ├── __init__.py
-│   │   ├── machine.py
-│   │   ├── service.py
-│   │   └── user.py
-│   ├── __init__.py
-│   ├── maipen.db
-│   └── routes
-│       ├── auth.py
-│       ├── __init__.py
-│       ├── machines.py
-│       └── services.py
+├── app/
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── machine.py
+│   │   ├── service.py
+│   │   └── user.py
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── machines.py
+│   │   └── services.py
+│   └── __init__.py
 ├── app.py
 ├── CHANGELOG.md
-├── docker-compose.yml
 ├── Dockerfile
+├── docker-compose.yml
 ├── LICENSE.md
 ├── README.md
-├── requirements.txt
-├── static
-│   └── css
-└── templates
-    ├── add_machine.html
-    ├── add_service.html
-    ├── dashboard.html
-    ├── delete_account.html
-    ├── delete_machine.html
-    ├── delete_service.html
-    ├── login.html
-    ├── machine_info.html
-    ├── mymachines.html
-    └── register.html
+└── requirements.txt
 ```
 
 ---
 
-# Database
+ # Development
 
-Maipen uses **SQLite** for persistent storage.
-
-The database is created automatically when the application starts.
-
-Database files are intentionally ignored by Git:
-
-```gitignore
-*.db
-*.sqlite
-*.sqlite3
 ```
-
----
-
-# Security Notes
-
-Maipen includes several security measures:
-
-- Protected routes require authentication
-- Destructive actions use `POST` requests instead of `GET`
-- User data is isolated through authentication checks
-- Session data is stored separately from application source code
-
----
-
-# Development
-
-## Create a Virtual Environment
-
-```bash
 python -m venv .venv
-```
-
----
-
-## Activate the Environment
-
-### Linux / macOS
-
-```bash
 source .venv/bin/activate
-```
-
-### Windows
-
-```powershell
-.venv\Scripts\activate
-```
-
----
-
-## Install Dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
----
-
-## Run the Application
-
-```bash
 python app.py
 ```
 
----
+ Windows:
 
+```
+.venv\Scripts\activate
+```
+
+ # To start HTTPs
+
+Run the `create_certs.sh` script.
+```
+$ chmod +x create_certs.sh
+$ ./create_certs.sh
+[+] Created 'certs/' directory
+[+] Created private key
+[+] Created certificate
+-----
+[+] Created certificate for service
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = maipen.local
+IP.1 = 127.0.0.1
+[+] Created v3 ext file
+Certificate request self-signature ok
+subject=CN=Maipen Web Server, C=AT, ST=Madrid, L=Madrid, O=Maipen Local
+[+] Created CA
+[+] Done
+```
+ Uncomment this line in `app.py`
+ ```
+#    app.run(host="127.0.0.1",port=5000,debug=False, ssl_context=('certs/web-maipen.crt', 'certs/private/web-maipen.key'))
+ ```
+
+ Comment this line instead:
+
+```
+ app.run(host="127.0.0.1",port=5000,debug=False)
+```

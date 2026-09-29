@@ -100,3 +100,36 @@
 ### Removed
     Database Cleanup:
         Removed the old database.py file after migrating functionality into app/database modules.
+
+[0.4.0] - 2026-09-29
+### Added
+    CSRF Protection:
+        Added CSRF token validation to POST requests.
+    Session Security:
+        Improved session handling and security.
+    Server-Side Validation:
+        Added stronger validation for machine, service, and user input.
+    HTTPS:
+        Added HTTPS support using the ML-DSA-87 post-quantum signature algorithm.
+
+### Changed
+    Authentication:
+        Changed unauthenticated access responses from HTTP 404 to HTTP 401.
+    Validation:
+        Improved server-side validation to prevent invalid or incomplete requests from reaching application logic.
+    Security:
+        Strengthened request handling, authentication, and session security.
+
+### Fixed
+    Machine Registration:
+        Fixed KeyError exceptions caused by POST requests missing required fields such as machine name.
+    Service Registration:
+        Fixed KeyError exceptions caused by POST requests missing required fields.
+    Input Validation:
+        Fixed multiple validation issues and incorrect validation behavior across the application.
+    Request Handling:
+        Improved handling of incomplete or malformed POST requests.
+
+### Notes
+    Browser Compatibility:
+        ML-DSA-87 HTTPS support is not currently supported by Firefox. Chromium-based browsers are recommended when using this configuration.

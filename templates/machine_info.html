@@ -1,73 +1,413 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>{{ machine_name }} - Information</title> <style> * { box-sizing: border-box; font-family: "Segoe UI", Arial, sans-serif; } body { margin:0; min-height:100vh; padding:40px; color:white; background: radial-gradient( circle at top left, #2563eb, transparent 35% ), linear-gradient( 135deg, #020617, #0f172a, #172554 ); } .container { max-width:1200px; margin:auto; } .flash { background:#1e40af; padding:15px; border-radius:10px; margin-bottom:20px; } .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; } .header h1 { color:#38bdf8; margin:0; } .back { background:#2563eb; color:white; text-decoration:none; padding:12px 20px; border-radius:10px; } .machine-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius:20px; padding:30px; backdrop-filter:blur(12px); margin-bottom:30px; } .machine-title { font-size:32px; color:#e0f2fe; margin-bottom:20px; } .info-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:20px; } .info-box { background: rgba(255,255,255,0.08); padding:20px; border-radius:15px; } .label { color:#94a3b8; font-size:14px; } .value { margin-top:8px; font-size:18px; color:white; } .section-title { margin-top:40px; color:#38bdf8; } table { width:100%; border-collapse:collapse; margin-top:20px; overflow:hidden; border-radius:15px; } th { background:#1e3a8a; color:white; padding:15px; text-align:left; } td { padding:15px; border-bottom: 1px solid rgba(255,255,255,0.1); } tr { background: rgba(255,255,255,0.06); } tr:hover { background: rgba(255,255,255,0.12); } .badge { background:#0ea5e9; padding:6px 12px; border-radius:20px; font-size:13px; } .action { color:white; text-decoration:none; padding:8px 14px; border-radius:8px; background:#dc2626; } .action:hover { background:#b91c1c; } .buttons { margin-top:30px; display:flex; gap:15px; flex-wrap:wrap; } .button { text-decoration:none; color:white; background:#2563eb; padding:12px 20px; border-radius:10px; font-weight:bold; } .button:hover { background:#1d4ed8; } .green { background:#16a34a; } .green:hover { background:#15803d; } </style> </head> <body> <div class="container">
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ machine_name }} - Machine</title>
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 30px 15px;
+        background: #050608;
+        color: #e7e9ec;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .container {
+        width: min(1000px, 100%);
+        margin: auto;
+    }
+
+    .flash {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 1px solid #29352f;
+        border-radius: 6px;
+        background: #09100d;
+        color: #9ac5ae;
+        font-size: 14px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #1b2028;
+    }
+
+    h1 {
+        margin: 0;
+        color: #f1f1f1;
+        font-size: 28px;
+    }
+
+    .subtitle {
+        margin-top: 5px;
+        color: #737b87;
+        font-size: 13px;
+    }
+
+    .back,
+    .button {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #303741;
+        background: #10141a;
+        color: #cfd3d8;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .back:hover,
+    .button:hover {
+        background: #171c23;
+        color: white;
+    }
+
+    .card {
+        padding: 25px;
+        margin-bottom: 25px;
+        border: 1px solid #1b2028;
+        border-radius: 8px;
+        background: #0b0e12;
+    }
+
+    .machine-name {
+        margin-bottom: 20px;
+        color: #ff3b30;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    .info-box {
+        padding: 15px;
+        border: 1px solid #1b2028;
+        border-radius: 6px;
+        background: #080a0d;
+    }
+
+    .label {
+        margin-bottom: 7px;
+        color: #737b87;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .value {
+        color: #e7e9ec;
+        font-size: 16px;
+        word-break: break-word;
+    }
+
+    .section-title {
+        margin: 25px 0 12px;
+        color: #ff3b30;
+        font-size: 18px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #0b0e12;
+        border: 1px solid #1b2028;
+    }
+
+    th,
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #1b2028;
+        text-align: left;
+    }
+
+    th {
+        color: #737b87;
+        background: #080a0d;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        color: #cfd3d8;
+        font-size: 14px;
+    }
+
+    tr:hover {
+        background: #10141a;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 5px;
+        background: #1a100c;
+        color: #ff8a3d;
+        font-size: 12px;
+    }
+
+    .delete {
+        padding: 7px 10px;
+        border-radius: 5px;
+        background: #140b0e;
+        border: 1px solid #4d2228;
+        color: #c98288;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .delete:hover {
+        background: #260d11;
+        color: #f0a5aa;
+    }
+
+    .no-services {
+        padding: 15px;
+        border: 1px solid #1b2028;
+        border-radius: 6px;
+        background: #0b0e12;
+        color: #737b87;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .green {
+        border-color: #28533c;
+        background: #0c1812;
+        color: #9ed2b5;
+    }
+
+    .green:hover {
+        background: #102219;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 10px;
+        }
+
+        .header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .card {
+            padding: 18px;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+
+        .button,
+        .back {
+            text-align: center;
+        }
+    }
+</style>
+
+</head> <body> <div class="container">
 {% with messages = get_flashed_messages() %}
-
-{% if messages %}
-
-{% for message in messages %}
-
-<div class="flash"> {{ message }} </div>
-
-{% endfor %}
-
-{% endif %}
-
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endwith %}
 
-<div class="header"> <h1> 🖥️ Machine Details </h1>
+<div class="header">
 
-<a class="back" href="{{ url_for('machines.my_machines') }}">
-Back to Machines
-</a>
+    <div>
+        <h1>Machine Profile</h1>
 
-</div> <div class="machine-card"> <div class="machine-title">
+        <div class="subtitle">
+            USER CONSOLE // MACHINE INFORMATION
+        </div>
+    </div>
 
-{{ machine_name }}
-
-</div> <div class="info-grid"> <div class="info-box"> <div class="label"> IP Address </div> <div class="value"> {{ machine_ip }} </div> </div> <div class="info-box"> <div class="label"> Operating System </div> <div class="value"> {{ machine_os }} </div> </div> <div class="info-box"> <div class="label"> Created </div> <div class="value"> {{ machine_creation_date }} </div> </div> <div class="info-box"> <div class="label"> Description </div> <div class="value"> {{ machine_description }} </div> </div> </div> </div>
-
-{% if m_services %}
-
-<h2 class="section-title"> ⚙ Services </h2> <table> <thead> <tr> <th>Protocol</th> <th>Port</th> <th>Name</th> <th>Version</th> <th>Action</th> </tr> </thead> <tbody>
-
-{% for var in m_services %}
-
-<tr> <td> <span class="badge"> {{ var[0] }} </span> </td> <td> {{ var[1] }} </td> <td> {{ var[2] }} </td> <td> {{ var[3] }} </td> <td>
-
-<a class="action" href="{{ url_for('services.delete_service', m=machine_uuid, p=var[1]) }}">
-Delete
-</a>
-
-</td> </tr>
-
-{% endfor %}
-
-</tbody> </table>
-
-{% else %}
-
-<div class="machine-card">
-
-No services registered for this machine.
+    <a
+        class="back"
+        href="{{ url_for('machines.my_machines') }}"
+    >
+        ← Machines
+    </a>
 
 </div>
 
+
+<div class="card">
+
+    <div class="machine-name">
+        {{ machine_name }}
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-box">
+            <div class="label">
+                IP Address
+            </div>
+
+            <div class="value">
+                {{ machine_ip }}
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="label">
+                Operating System
+            </div>
+
+            <div class="value">
+                {{ machine_os }}
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="label">
+                Created
+            </div>
+
+            <div class="value">
+                {{ machine_creation_date }}
+            </div>
+        </div>
+
+        <div class="info-box">
+            <div class="label">
+                Description
+            </div>
+
+            <div class="value">
+                {{ machine_description }}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="section-title">
+    Services
+</div>
+
+
+{% if m_services %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Protocol</th>
+                    <th>Port</th>
+                    <th>Name</th>
+                    <th>Version</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for var in m_services %}
+
+                <tr>
+
+                    <td>
+                        <span class="badge">
+                            {{ var[0] }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{ var[1] }}
+                    </td>
+
+                    <td>
+                        {{ var[2] }}
+                    </td>
+
+                    <td>
+                        {{ var[3] }}
+                    </td>
+
+                    <td>
+                        <a
+                            class="delete"
+                            href="{{ url_for('services.delete_service', m=machine_uuid, p=var[1]) }}"
+                        >
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 {% endif %}
+
+
+{% if no_services %}
+
+    <div class="no-services">
+        {{ no_services }}
+    </div>
+
+{% endif %}
+
 
 <div class="buttons">
 
-<a class="button green" href="{{ url_for('services.new_service', m=machine_uuid) }}">
+    <a
+        class="button green"
+        href="{{ url_for('services.new_service', m=machine_uuid) }}"
+    >
+        + Add Service
+    </a>
 
-Add Service
-</a>
+    <a
+        class="button"
+        href="{{ url_for('machines.new_machine') }}"
+    >
+        + Add Machine
+    </a>
 
-<a class="button" href="{{ url_for('machines.new_machine') }}">
+    <a
+        class="button"
+        href="{{ url_for('machines.my_machines') }}"
+    >
+        Machines
+    </a>
 
-Add Machine
-</a>
+</div>
 
-<a class="button" href="{{ url_for('machines.my_machines') }}">
-My Machines
-</a>
-
-</div> </div> </body> </html>
+</div> </body> </html>

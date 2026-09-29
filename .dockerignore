@@ -2,6 +2,16 @@
 .env.*
 .venv/
 
+certs/
+.key
+.crt
+.ca
+.c
+.csr
+.srl
+.ext
+
+
 .git/
 
 flask_session/

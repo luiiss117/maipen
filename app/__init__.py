@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_session import Session
+from flask_wtf.csrf import CSRFProtect
 from os import environ
 from dotenv import load_dotenv
 from app.routes import blueprints
@@ -13,14 +14,13 @@ def create_app():
         app.register_blueprint(blueprint)
     load_dotenv()
     app.secret_key = environ["SECRET_KEY"] # Secret key for Session
-    app.config["SESSION_PERMANENT"] = False     # Sessions expire when the browser is closed
-    app.config["SESSION_TYPE"] = "filesystem"     # Store session data in files
+    app.config["SESSION_PERMANENT"]=False
+    app.config["SESSION_TYPE"]="filesystem"
+    app.config["SESSION_COOKIE_SECURE"]=True 
+    app.config["SESSION_COOKIE_HTTPONLY"]=True 
+    app.config["SESSION_COOKIE_SAMESITE"]="Lax"    
+    csrf = CSRFProtect(app)
     Session(app)
     return app
-
-
-if __name__ == '__main__':
-    database.init_db()
-    app.run(host='0.0.0.0', port=5000, debug=True)
     
 

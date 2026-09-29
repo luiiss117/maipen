@@ -1,69 +1,296 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Add Service</title> <style> * { box-sizing:border-box; font-family:"Segoe UI", Arial, sans-serif; } body { margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center; background: radial-gradient( circle at top left, #2563eb, transparent 35% ), linear-gradient( 135deg, #020617, #0f172a, #172554 ); color:white; } .form-container { width:420px; padding:40px; border-radius:20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); backdrop-filter:blur(15px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); } h2 { text-align:center; color:#38bdf8; font-size:32px; margin-bottom:30px; } .flash { background:#1e40af; padding:12px; border-radius:10px; margin-bottom:15px; } .error { color:#fecaca; background:#991b1b; padding:8px; border-radius:8px; margin-bottom:10px; display:block; } .form-group { margin-bottom:20px; } label { display:block; margin-bottom:8px; color:#cbd5e1; font-weight:600; } input, textarea, select { width:100%; padding:12px; border-radius:10px; border:1px solid #475569; background:#0f172a; color:white; font-size:15px; outline:none; } input:focus, textarea:focus, select:focus { border-color:#38bdf8; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); } textarea { resize:vertical; height:90px; } button { width:100%; padding:14px; margin-top:10px; border:none; border-radius:10px; background:#16a34a; color:white; font-size:16px; font-weight:bold; cursor:pointer; } button:hover { background:#15803d; } .return { display:block; text-align:center; margin-top:20px; color:#38bdf8; text-decoration:none; font-weight:600; } .return:hover { text-decoration:underline; } </style> </head> <body> <div class="form-container"> <h2> ⚙ Add New Service </h2>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Add Service</title>
+<style>
+    :root {
+        --bg: #050608;
+        --panel: #0b0e12;
+        --border: #1b2028;
+        --red: #ff3b30;
+        --green: #39d98a;
+        --text: #e7e9ec;
+        --muted: #737b87;
+        --mono: Consolas, "SFMono-Regular", monospace;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 450px;
+        padding: 28px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+    }
+
+    header {
+        margin-bottom: 25px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 22px;
+    }
+
+    h1::before {
+        content: "> ";
+        color: var(--red);
+    }
+
+    .subtitle {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 10px;
+    }
+
+    .status {
+        margin-top: 10px;
+        color: var(--green);
+        font-size: 9px;
+    }
+
+    .status::before {
+        content: "● ";
+    }
+
+    .flash,
+    .error {
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 10px;
+    }
+
+    .flash {
+        border: 1px solid #29352f;
+        background: #09100d;
+        color: #9ac5ae;
+    }
+
+    .flash::before {
+        content: "[+] ";
+        color: var(--green);
+    }
+
+    .error {
+        border: 1px solid #5b252b;
+        background: #160a0d;
+        color: #ef9da3;
+    }
+
+    .error::before {
+        content: "[!] ";
+        color: var(--red);
+    }
+
+    .form-group {
+        margin-bottom: 17px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        color: #aeb5bf;
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 11px;
+        border: 1px solid #252b33;
+        border-radius: 0;
+        outline: none;
+        background: #07090c;
+        color: var(--text);
+        font: inherit;
+        font-size: 11px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--red);
+    }
+
+    textarea {
+        min-height: 75px;
+        resize: vertical;
+    }
+
+    .hint {
+        margin-top: 5px;
+        color: #4d5560;
+        font-size: 8px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #76252c;
+        border-radius: 0;
+        background: #351015;
+        color: white;
+        font: inherit;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #52161d;
+        border-color: var(--red);
+    }
+
+    button::before {
+        content: "[+] ";
+        color: var(--red);
+    }
+
+    .return {
+        display: block;
+        margin-top: 17px;
+        color: var(--muted);
+        font-size: 9px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .return:hover {
+        color: white;
+    }
+
+    .return::before {
+        content: "< ";
+        color: var(--red);
+    }
+
+    footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+        color: #454c56;
+        font-size: 8px;
+        text-align: center;
+    }
+
+    @media (max-width: 500px) {
+        .container {
+            padding: 22px 18px;
+        }
+    }
+</style>
+
+</head> <body> <div class="container">
+<header>
+    <h1>Add Service</h1>
+    <div class="subtitle">USER CONSOLE // SERVICE REGISTRATION</div>
+    <div class="status">SESSION ACTIVE</div>
+</header>
 
 {% with messages = get_flashed_messages() %}
-
-{% if messages %}
-
-{% for message in messages %}
-
-<div class="flash"> {{ message }} </div>
-
-{% endfor %}
-
-{% endif %}
-
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 {% endwith %}
 
-<form method="post"> <div class="form-group"> <label for="protocol"> Network Protocol </label> <select name="protocol" id="protocol"> <option value="TCP"> TCP </option> <option value="UDP"> UDP </option> <option value="TCP&UDP"> TCP and UDP </option> </select> </div> <div class="form-group"> <label for="port"> Port Number </label>
+<form method="post">
 
-{% if error %}
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
 
-<div class="error"> {{ error }} </div>
+    <div class="form-group">
+        <label for="protocol">Protocol</label>
 
-{% endif %}
+        <select id="protocol" name="protocol">
+            <option value="TCP">TCP</option>
+            <option value="UDP">UDP</option>
+            <option value="TCP&UDP">TCP and UDP</option>
+        </select>
+    </div>
 
-<input
+    <div class="form-group">
+        <label for="port">Port</label>
 
-type="number"
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
 
-id="port"
+        <input
+            type="number"
+            id="port"
+            name="port"
+            required
+            min="1"
+            max="65535"
+            placeholder="22"
+        >
 
-name="port"
+        <div class="hint">
+            Valid range: 1–65535
+        </div>
+    </div>
 
-required
+    <div class="form-group">
+        <label for="name">Service Name</label>
 
-placeholder="Example: 22"
+        <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="OpenSSH"
+        >
+    </div>
 
-min="1"
+    <div class="form-group">
+        <label for="version">Version</label>
 
-max="65535"
+        <textarea
+            id="version"
+            name="version"
+            placeholder="5.16"
+        ></textarea>
+    </div>
 
-</div> <div class="form-group"> <label for="name"> Service Name </label>
+    <button type="submit">
+        Register Service
+    </button>
 
-<input
+    {% set machine_uuid = request.args.get("m") %}
 
-type="text"
+    <a
+        class="return"
+        href="{{ url_for('machines.machine_info', machine_uuid=machine_uuid) }}"
+    >
+        Return to Machine
+    </a>
 
-id="name"
+</form>
 
-name="name"
+<footer>
+    USER CONSOLE // AUTHORIZED
+</footer>
 
-required
-
-placeholder="Example: OpenSSH, Redis, PostgreSQL"
-
-</div> <div class="form-group"> <label for="version"> Service Version (Optional) </label> <textarea id="version" name="version" placeholder="Example: 5.16" ></textarea> </div> <button type="submit">
-
-Save Service
-
-</button>
-
-{% set machine_uuid = request.args.get("m") %}
-
-<a class="return"
-
-href="{{ url_for('machines.machine_info', machine_uuid=machine_uuid) }}">
-
-← Return to Machine
-
-</a> </form> </div> </body> </html>
+</div> </body> </html>

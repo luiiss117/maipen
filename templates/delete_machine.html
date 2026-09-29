@@ -1,37 +1,138 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Delete Machine</title> <style> * { box-sizing:border-box; font-family:"Segoe UI", Arial, sans-serif; } body { margin:0; height:100vh; display:flex; justify-content:center; align-items:center; background: radial-gradient( circle at top left, #2563eb, transparent 35% ), linear-gradient( 135deg, #020617, #0f172a, #172554 ); color:white; } .card { width:430px; padding:40px; border-radius:20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); backdrop-filter:blur(15px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); text-align:center; } .icon { font-size:55px; margin-bottom:15px; } h1 { color:#f87171; margin-bottom:15px; } p { color:#cbd5e1; line-height:1.5; margin-bottom:25px; } .warning { background: rgba(220,38,38,0.15); border: 1px solid rgba(248,113,113,0.4); padding:15px; border-radius:12px; color:#fecaca; margin-bottom:25px; } .buttons { display:flex; gap:15px; } button { flex:1; padding:13px; border:none; border-radius:10px; font-size:16px; font-weight:bold; cursor:pointer; transition:0.2s; } .delete { background:#dc2626; color:white; } .delete:hover { background:#b91c1c; } .cancel { background:#2563eb; color:white; } .cancel:hover { background:#1d4ed8; } </style> </head> <body> <div class="card"> <div class="icon"> 🖥️⚠️ </div> <h1> Delete Machine? </h1> <p>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Machine</title>
 
-You are about to remove this machine from your inventory.
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-</p> <div class="warning">
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: #07090c;
+        color: #e5e7eb;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
 
-All associated information and services linked to this machine will be deleted.
+    .card {
+        width: min(430px, 100%);
+        padding: 30px;
+        border: 1px solid #30343b;
+        border-radius: 10px;
+        background: #0d1117;
+        text-align: center;
+    }
 
-</div> <form method="post"> <div class="buttons">
+    .icon {
+        font-size: 42px;
+        margin-bottom: 15px;
+    }
 
-<button
+    h1 {
+        margin: 0 0 12px;
+        color: #f87171;
+        font-family: Consolas, monospace;
+        font-size: 25px;
+    }
 
-type="submit"
+    p {
+        margin: 0 0 20px;
+        color: #9ca3af;
+        line-height: 1.6;
+    }
 
-class="delete"
+    .warning {
+        margin-bottom: 25px;
+        padding: 13px;
+        border: 1px solid #63252b;
+        border-radius: 7px;
+        background: #180b0d;
+        color: #fca5a5;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+    }
 
-name="confirmation"
+    .buttons {
+        display: flex;
+        gap: 10px;
+    }
 
-value="Yes">
+    button {
+        flex: 1;
+        padding: 12px;
+        border: 0;
+        border-radius: 7px;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-Delete Machine
+    .delete {
+        background: #dc2626;
+    }
 
-</button>
+    .delete:hover {
+        background: #b91c1c;
+    }
 
-<button
+    .cancel {
+        background: #252b33;
+    }
 
-type="submit"
+    .cancel:hover {
+        background: #343b45;
+    }
+</style>
 
-class="cancel"
+</head> <body> <div class="card">
+<div class="icon">🖥️⚠️</div>
 
-name="confirmation"
+<h1>Delete Machine?</h1>
 
-value="No">
+<p>
+    You are about to remove this machine
+    from your inventory.
+</p>
 
-Cancel
+<div class="warning">
+    All services and information linked to this machine will be deleted.
+</div>
 
-</button> </div> </form> </div> </body> </html>
+<form method="post">
+
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
+
+    <div class="buttons">
+
+        <button
+            class="delete"
+            type="submit"
+            name="confirmation"
+            value="Yes"
+        >
+            Delete Machine
+        </button>
+
+        <button
+            class="cancel"
+            type="submit"
+            name="confirmation"
+            value="No"
+        >
+            Cancel
+        </button>
+
+    </div>
+
+</form>
+
+</div> </body> </html>

@@ -42,6 +42,20 @@ def get_service_port(machine_id,port):
     except sqlite3.OperationalError as e:
         print("Error", e)
 
+def get_all_services(machine_id):
+    try:
+        with sqlite3.connect(database) as conn:
+            sql = ''' SELECT protocol,port,name,version FROM machine_services WHERE machine_id=?'''
+            cur = conn.cursor()
+            cur.execute(sql, (machine_id,))
+            row = cur.fetchall()
+            if row:
+                return row
+            else:
+                return None
+    except sqlite3.OperationalError as e:
+        print("Error", e)
+
 def delete_service(machine_id, port):
     try:
         with sqlite3.connect(database) as conn:
@@ -59,24 +73,6 @@ def delete_all_services(machine_id):
             sql = ''' DELETE FROM machine_services WHERE machine_id =?'''
             cur = conn.cursor()
             cur.execute(sql, (machine_id,))
-
             conn.commit()
     except sqlite3.OperationalError as e:
         print("Error", e)
-
-
-def get_all_services_by_id(machine_id):
-    try:
-        with sqlite3.connect(database) as conn:
-            sql = ''' SELECT protocol,port,name,version FROM machine_services WHERE machine_id=?'''
-            cur = conn.cursor()
-            cur.execute(sql, (machine_id,))
-            row = cur.fetchall()
-            if row:
-                return row
-            else:
-                return None
-    except sqlite3.OperationalError as e:
-        print("Error", e)
-
-
